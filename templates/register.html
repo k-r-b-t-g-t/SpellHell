@@ -1,0 +1,21 @@
+{% from 'formFields.html' import showField %}
+
+{% extends "template.html" %}
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <center>
+	<h3 id="displayHeading">{{displayHeading}}</h3>
+	<h4 id="success">{{displayMessage}}</h4>
+	{% if not "success" in displayMessage  %}
+            <form action="{{ url_for('register')}}", method="POST">
+                {{ showField(form.username, 'Username', autocomplete="off", autofocus=true,  id="uname") }}
+                {{ showField(form.password, 'Password',  id="pword") }}
+                {{ showField(form.telephone, 'Telephone',  id="2fa") }}
+                {{ showField(form.submit_button, 'Register', id='register') }}
+                {{ form.csrf_token }}
+            </form>
+	    <p>Already have an account?
+	{% endif %}
+	    <a href="{{ url_for('login') }}">Log in</a>!</p>
+{% endblock %}

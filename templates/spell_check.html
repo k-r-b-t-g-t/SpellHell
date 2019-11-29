@@ -1,0 +1,33 @@
+{% from 'formFields.html' import showField %}
+{% extends 'template.html' %}
+
+{% block title %}Spell Checker{% endblock %}
+
+{% block content %}
+	<center>
+		<h3 id="displayHeading">{{displayHeading}}</h3>
+		{% if session.get('user_context')  %}
+			<h4>Welcome, {{ session['user_context'] }}! </h4>
+			<h5><a href="{{ url_for('history') }}">Query History</a>{% if session.get('admin') == "1" %} | <a href="{{ url_for('login_history') }}">Login History</a> {% endif %} | <a href="{{ url_for('logout') }}">Log Out</a></h5>
+		{% endif %}
+    		<form action="{{ url_for('spell_check') }}" method="POST">
+        		{{ showField(form.inputtext, 'Test String', autocomplete="off", autofocus=true,  id="inputtext") }}
+			<div> {{ form.csrf_token }}{{ form.submit_button }} </div>
+		</form><br /><br />
+		{% if inputtext %}
+		<table style="border: 1px solid black; width: 600px;"><tr>
+			<td width="50%" align="center">
+				<h5>Input String</h5>
+			</td><td width="50%" align="center">
+				<h5>Misspelled</h5>
+			</td>
+			</tr><tr>
+			<td valign="top">
+        			<p id="outputtext">{{ inputtext }}</p>
+			</td><td valign="top" align="center">
+				<p id="misspelled">{{ misspelled }}</p>
+			</td>
+		</tr></table.
+		{% endif %}
+	</center>
+{% endblock %}
