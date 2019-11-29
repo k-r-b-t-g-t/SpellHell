@@ -22,7 +22,8 @@ adminLoginTest3 = Authentication(user_id=1, action="Login", time=time.asctime( t
 db.session.add(adminLoginTest)
 db.session.add(adminLoginTest2)
 db.session.add(adminLoginTest3)
-db.session.add(defaultAdmin)
+if not defaultAdmin:
+   db.session.add(defaultAdmin)
 db.session.commit()
 
 @app.route("/", methods=['GET', 'POST'])
